@@ -1,0 +1,5 @@
+C:/Jogo/Cats/Cats/.utmp/RelWithDebInfo/306p47e1/x86_64/CMakeFiles/edit_cache.dir
+C:/Jogo/Cats/Cats/.utmp/RelWithDebInfo/306p47e1/x86_64/CMakeFiles/rebuild_cache.dir
+C:/Jogo/Cats/Cats/.utmp/RelWithDebInfo/306p47e1/x86_64/GameActivity/CMakeFiles/game.dir
+C:/Jogo/Cats/Cats/.utmp/RelWithDebInfo/306p47e1/x86_64/GameActivity/CMakeFiles/edit_cache.dir
+C:/Jogo/Cats/Cats/.utmp/RelWithDebInfo/306p47e1/x86_64/GameActivity/CMakeFiles/rebuild_cache.dir
