@@ -7,11 +7,15 @@ workflows:
       unity: 2022.3.62f2
 
     scripts:
-      - name: Debug Unity path
-        script: echo $UNITY_HOME
+      - name: Descobrir Unity
+        script: |
+          ls /Applications/Unity/Hub/Editor/
 
       - name: Build do Unity para iOS
-        script: $UNITY_HOME/Contents/MacOS/Unity -batchmode -quit -projectPath . -executeMethod BuildScript.BuildIOS -nographics
+        script: |
+          UNITY_PATH=$(find /Applications/Unity/Hub/Editor -name Unity.app | head -n 1)
+          echo "Unity encontrado em: $UNITY_PATH"
+          "$UNITY_PATH/Contents/MacOS/Unity" -batchmode -quit -projectPath . -executeMethod BuildScript.BuildIOS -nographics
 
       - name: Gerar arquivo IPA
         script: |
