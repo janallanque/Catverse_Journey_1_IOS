@@ -2,14 +2,17 @@ workflows:
   unity-ios-build:
     name: Build iOS para Teste
     instance_type: mac_mini_m2
+
     environment:
-      unity: 2022.3.62f2  # ← versão disponível no Codemagic
+      unity: 2022.3.62f2
+
     scripts:
       - name: Build do Unity para iOS
         script: |
-          /Applications/Unity/Hub/Editor/$UNITY_VERSION/Unity.app/Contents/MacOS/Unity \
+          $UNITY_PATH \
             -batchmode -quit -projectPath . \
             -executeMethod BuildScript.BuildIOS -nographics
+
       - name: Gerar arquivo IPA
         script: |
           cd ios_build
@@ -17,8 +20,10 @@ workflows:
             -scheme Unity-iPhone \
             -configuration Release \
             -sdk iphoneos build
+
           mkdir -p Payload
           cp -r build/Release-iphoneos/Unity-iPhone.app Payload/
           zip -r Catverse_Journey.ipa Payload
+
     artifacts:
       - "*.ipa"
