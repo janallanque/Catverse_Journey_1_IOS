@@ -1,30 +1,30 @@
 workflows:
-unity-ios-build:
-name: Build iOS para Teste
-instance_type: mac_mini_m2
+  unity-ios-build:
+    name: Build iOS para Teste
+    instance_type: mac_mini_m2
 
+    environment:
+      unity: 2022.3.62f2
 
-environment:
-  unity: 2022.3.62f2
+    scripts:
+      - name: Debug Unity path
+        script: echo $UNITY_HOME
 
-scripts:
-  - name: Build do Unity para iOS
-    script: /Applications/Unity/Hub/Editor/2022.3.62f2/Unity.app/Contents/MacOS/Unity -batchmode -quit -projectPath . -executeMethod BuildScript.BuildIOS -nographics
+      - name: Build do Unity para iOS
+        script: $UNITY_HOME/Contents/MacOS/Unity -batchmode -quit -projectPath . -executeMethod BuildScript.BuildIOS -nographics
 
-  - name: Gerar arquivo IPA
-    script: |
-      cd ios_build
+      - name: Gerar arquivo IPA
+        script: |
+          cd ios_build
+          xcodebuild -project Unity-iPhone.xcodeproj \
+            -scheme Unity-iPhone \
+            -configuration Release \
+            -sdk iphoneos \
+            CODE_SIGNING_ALLOWED=NO
 
-      xcodebuild -project Unity-iPhone.xcodeproj \
-        -scheme Unity-iPhone \
-        -configuration Release \
-        -sdk iphoneos \
-        CODE_SIGNING_ALLOWED=NO
+          mkdir -p Payload
+          cp -r build/Release-iphoneos/Unity-iPhone.app Payload/
+          zip -r Catverse_Journey.ipa Payload
 
-      mkdir -p Payload
-      cp -r build/Release-iphoneos/Unity-iPhone.app Payload/
-      zip -r Catverse_Journey.ipa Payload
-
-artifacts:
-  - "*.ipa"
-
+    artifacts:
+      - "*.ipa"
