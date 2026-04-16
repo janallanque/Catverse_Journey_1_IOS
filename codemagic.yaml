@@ -1,0 +1,11 @@
+workflows:
+  unity-android:
+    name: Unity Android Build
+    environment:
+      unity: 6000.0.70f1
+    scripts:
+      - name: Build APK
+        script: |
+          echo "Iniciando build Unity"
+    artifacts:
+      - build/**/*.apk
