@@ -1,1 +1,12 @@
-null
+workflows:
+  unity-ios:
+    name: Unity iOS Build
+    instance_type: mac_mini_m2
+    environment:
+      vars:
+        UNITY_BIN: /Applications/Unity/Hub/Editor/2022.3.20f1/Unity.app/Contents/MacOS/Unity
+    scripts:
+      - name: Build project
+        script: echo "Building..."
+    artifacts:
+      - "*.ipa"
