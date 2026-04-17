@@ -9,19 +9,19 @@ workflows:
     scripts:
       - name: Debug Unity path
         script: 
-            - echo $UNITY_HOME
+            echo $UNITY_HOME
 
       - name: Build do Unity para iOS
         script:
-            - $UNITY_HOME/Contents/MacOS/Unity -batchmode -quit -projectPath . -ex
+            $UNITY_HOME/Contents/MacOS/Unity -batchmode -quit -projectPath . -ex
 
       - name: Gerar arquivo IPA
         script:
-          - cd ios_build
-          - xcodebuild -project Unity-iPhone.xcodeproj -scheme Unity-iPhone -configuration Release -sdk iphoneos CODE_SIGNING_ALLOWED=NO
-          - mkdir -p Payload
-          - cp -r build/Release-iphoneos/Unity-iPhone.app Payload/
-          - zip -r Catverse_Journey.ipa Payload
+          cd ios_build
+          xcodebuild -project Unity-iPhone.xcodeproj -scheme Unity-iPhone -configuration Release -sdk iphoneos CODE_SIGNING_ALLOWED=NO
+          mkdir -p Payload
+          cp -r build/Release-iphoneos/Unity-iPhone.app Payload/
+          zip -r Catverse_Journey.ipa Payload
 
     artifacts:
       - "*.ipa"
