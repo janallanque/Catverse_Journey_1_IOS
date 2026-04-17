@@ -3,7 +3,6 @@ unity-ios-build:
 name: Build iOS para Teste
 instance_type: mac_mini_m2
 
-
 environment:
   unity: 2022.3.62f2
   groups:
