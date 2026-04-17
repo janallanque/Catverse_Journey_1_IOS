@@ -5,8 +5,8 @@ workflows:
     
     environment:
       unity: 2022.3.62f2
-         groups:
-            - Jana
+      groups:
+        - Jana
 
     scripts:
       - name: Ativar licença do Unity
