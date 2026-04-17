@@ -1,40 +1,42 @@
 workflows:
-  unity-ios-build:
-    name: Build iOS para Teste
-    instance_type: mac_mini_m2
+unity-ios-build:
+name: Build iOS para Teste
+instance_type: mac_mini_m2
 
-    environment:
-      unity: 2022.3.62f2
-      groups:
-        - Jana
 
-    scripts:
-      - name: Encontrar Unity
-        script: |
-          UNITY_PATH=$(find /Applications/Unity/Hub/Editor -name Unity.app | head -n 1)
-          echo "export UNITY_PATH=$UNITY_PATH" >> $CM_ENV
+environment:
+  unity: 2022.3.62f2
+  groups:
+    - Jana
 
-      - name: Ativar licença do Unity
-        script: |
-          echo "$UNITY_LICENSE" > unity.ulf
-          "$UNITY_PATH/Contents/MacOS/Unity" -batchmode -quit -logFile -manualLicenseFile unity.ulf
+scripts:
+  - name: Ativar licença do Unity
+    script: |
+      UNITY_PATH=$(find /Applications/Unity/Hub/Editor -name Unity.app | head -n 1)
+      echo "Unity encontrado em: $UNITY_PATH"
+      echo "$UNITY_LICENSE" > unity.ulf
+      "$UNITY_PATH/Contents/MacOS/Unity" -batchmode -quit -logFile -manualLicenseFile unity.ulf
 
-      - name: Build do Unity para iOS
-        script: |
-          "$UNITY_PATH/Contents/MacOS/Unity" -batchmode -quit -projectPath . -executeMethod BuildScript.BuildIOS -nographics
+  - name: Build do Unity para iOS
+    script: |
+      UNITY_PATH=$(find /Applications/Unity/Hub/Editor -name Unity.app | head -n 1)
+      echo "Unity encontrado em: $UNITY_PATH"
+      "$UNITY_PATH/Contents/MacOS/Unity" -batchmode -quit -projectPath . -executeMethod BuildScript.BuildIOS -nographics
 
-      - name: Gerar arquivo IPA
-        script: |
-          cd ios_build
-          xcodebuild -project Unity-iPhone.xcodeproj \
-            -scheme Unity-iPhone \
-            -configuration Release \
-            -sdk iphoneos \
-            CODE_SIGNING_ALLOWED=NO
+  - name: Gerar arquivo IPA
+    script: |
+      cd ios_build
 
-          mkdir -p Payload
-          cp -r build/Release-iphoneos/Unity-iPhone.app Payload/
-          zip -r Catverse_Journey.ipa Payload
+      xcodebuild -project Unity-iPhone.xcodeproj \
+        -scheme Unity-iPhone \
+        -configuration Release \
+        -sdk iphoneos \
+        CODE_SIGNING_ALLOWED=NO
 
-    artifacts:
-      - "*.ipa"
+      mkdir -p Payload
+      cp -r build/Release-iphoneos/Unity-iPhone.app Payload/
+      zip -r Catverse_Journey.ipa Payload
+
+artifacts:
+  - "*.ipa"
+
