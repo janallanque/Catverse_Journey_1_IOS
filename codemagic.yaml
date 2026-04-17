@@ -1,6 +1,6 @@
 workflows:
-unity-ios-build:
-name: Build iOS para Teste
+unity_ios_build:
+name: Build iOS
 instance_type: mac_mini_m2
 
 environment:
@@ -9,22 +9,22 @@ environment:
     - Jana
 
 scripts:
-  - name: Ativar licença do Unity
+  - name: Activate Unity License
     script:
       - echo "$UNITY_LICENSE" > unity.ulf
-      - $UNITY_HOME/Contents/MacOS/Unity -batchmode -quit -logFile -manualLicenseFile unity.ulf
+      - $UNITY_HOME/Contents/MacOS/Unity -batchmode -quit -manualLicenseFile unity.ulf
 
-  - name: Build do Unity para iOS
+  - name: Build Unity iOS
     script:
       - $UNITY_HOME/Contents/MacOS/Unity -batchmode -quit -projectPath . -executeMethod BuildScript.BuildIOS -nographics
 
-  - name: Gerar arquivo IPA
+  - name: Create IPA
     script:
       - cd ios_build
       - xcodebuild -project Unity-iPhone.xcodeproj -scheme Unity-iPhone -configuration Release -sdk iphoneos CODE_SIGNING_ALLOWED=NO
       - mkdir -p Payload
       - cp -r build/Release-iphoneos/Unity-iPhone.app Payload/
-      - zip -r Catverse_Journey.ipa Payload
+      - zip -r app.ipa Payload
 
 artifacts:
-  - "*.ipa"
+  - app.ipa
