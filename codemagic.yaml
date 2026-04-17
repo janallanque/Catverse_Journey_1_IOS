@@ -12,16 +12,12 @@ environment:
 scripts:
   - name: Ativar licença do Unity
     script: |
-      UNITY_PATH=$(find /Applications/Unity/Hub/Editor -name Unity.app | head -n 1)
-      echo "Unity encontrado em: $UNITY_PATH"
       echo "$UNITY_LICENSE" > unity.ulf
-      "$UNITY_PATH/Contents/MacOS/Unity" -batchmode -quit -logFile -manualLicenseFile unity.ulf
+      "$UNITY_HOME/Contents/MacOS/Unity" -batchmode -quit -logFile -manualLicenseFile unity.ulf
 
   - name: Build do Unity para iOS
     script: |
-      UNITY_PATH=$(find /Applications/Unity/Hub/Editor -name Unity.app | head -n 1)
-      echo "Unity encontrado em: $UNITY_PATH"
-      "$UNITY_PATH/Contents/MacOS/Unity" -batchmode -quit -projectPath . -executeMethod BuildScript.BuildIOS -nographics
+      "$UNITY_HOME/Contents/MacOS/Unity" -batchmode -quit -projectPath . -executeMethod BuildScript.BuildIOS -nographics
 
   - name: Gerar arquivo IPA
     script: |
