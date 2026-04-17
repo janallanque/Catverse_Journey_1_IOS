@@ -12,8 +12,8 @@ workflows:
             echo $UNITY_HOME
 
       - name: Build do Unity para iOS
-        script:
-            $UNITY_HOME/Contents/MacOS/Unity -batchmode -quit -projectPath . -ex
+        script: |
+            $UNITY_HOME/Contents/MacOS/Unity -batchmode -quit -projectPath . -executeMethod BuildScript.BuildIOS -nographics -logFile -
 
       - name: Gerar arquivo IPA
         script:
